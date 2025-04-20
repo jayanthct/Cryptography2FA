@@ -1,0 +1,21 @@
+
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Image processing cache (just in case)
+sharp-cache/
+
+# Optional: VSCode settings
+.vscode/
