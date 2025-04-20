@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 
 const TwoFactor = () => {
   const location = useLocation();
-  const history = useHistory();
-  const { userId } = location.state;
 
+  const navigate = useNavigate();
+  const { userId } = location.state || {};
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
 
@@ -14,14 +16,17 @@ const TwoFactor = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/verify-2fa", {
-        userId,
-        code,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/verify-2fa",
+        {
+          userId,
+          code,
+        }
+      );
 
       // On successful verification, store JWT and redirect to dashboard
       localStorage.setItem("jwt", response.data.token);
-      history.push("/dashboard");
+      navigate("/dashboard");
     } catch (err) {
       setError("Invalid 2FA code or server error");
     }
@@ -39,7 +44,9 @@ const TwoFactor = () => {
             onChange={(e) => setCode(e.target.value)}
             className="w-full p-3 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {error && <div className="text-red-500 text-center mb-4">{error}</div>}
+          {error && (
+            <div className="text-red-500 text-center mb-4">{error}</div>
+          )}
           <button
             type="submit"
             className="w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600"
