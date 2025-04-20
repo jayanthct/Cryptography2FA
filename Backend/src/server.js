@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 });
 
 // Put your routes here, for example:
-const authRoutes = require('./src/routes/authRoutes');
+const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {
